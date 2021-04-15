@@ -5,4 +5,4 @@ You can Check there documentation over here:  [Esbuild docs](https://esbuild.git
 
 ## About this project
 
-A small react app that shows a text area. The user can write code, click on submit, then we take the code, transpile and bundle it with esbuils, and show the rusults in the browser. 
+A small react app that shows a text area. The user can write code, click on submit, then we take the code, transpile and bundle it with esbuils, and show the results in the browser. 
