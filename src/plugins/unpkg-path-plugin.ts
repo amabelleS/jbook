@@ -19,18 +19,22 @@ export const unpkgPathPlugin = (inputCode: string) => {
   return {
     name: 'unpkg-path-plugin',
     setup(build: esbuild.PluginBuild) {
-      build.onResolve({ filter: /.*/ }, async (args: any) => {
-        console.log('onResole', args);
-        if (args.path === 'index.js') {
-            return { path: args.path, namespace: 'a' };
-        } 
+        // Handel root entry file of 'index.js'
+      build.onResolve({filter: /(^index\.js$)/}, () => {
+            return {path: 'index.js', namespace: 'a'};
+        })
 
-        if (args.path.includes('./') || args.path.includes('../')) {
-            return {
+        // Handel relative paths in a module
+      build.onResolve({filter: /^\.+\//}, (args:any) => {
+         return {
                 namespace: 'a',
                 path: new URL(args.path, 'https://unpkg.com' + args.resolveDir + '/').href
             }
-        }
+      })
+
+      // Handel main file of a module
+      build.onResolve({ filter: /.*/ }, async (args: any) => {
+        
         return {
             namespace: 'a',
             path: `https://unpkg.com/${args.path}`
