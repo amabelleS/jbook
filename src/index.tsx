@@ -30,6 +30,8 @@ const App = () => {
     //   target: 'es2015',
     // });
 
+    iframe.current.srcdoc = html
+
     const result = await ref.current.build({
         entryPoints: ['index.js'],
         bundle: true,
@@ -68,6 +70,7 @@ const App = () => {
       } catch (err) {
         const root = document.querySelector('#root');
         root.innerHTML = '<div style="color: red; background-color: yellow; padding: 0.5rem"><h4>Runtime Error</h4>' + err + '</div>'
+        console.error(err)
       }
      
     }, false)
