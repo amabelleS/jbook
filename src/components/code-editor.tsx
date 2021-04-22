@@ -5,7 +5,10 @@ import MonacoEditor, { EditorDidMount } from '@monaco-editor/react';
 import prettier from 'prettier';
 import parser from 'prettier/parser-babel';
 // import codeShift from 'jscodeshift';
-// import Highlighter from 'monaco-jsx-highlighter';
+import MonacoJSXHighlighter from 'monaco-jsx-highlighter';
+import {parse} from "@babel/parser";
+import traverse from "@babel/traverse";
+
 
 interface CodeEditorProps {
   initialValue: string;
@@ -24,12 +27,41 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ onChange, initialValue }) => {
 
     monacoEditor.getModel()?.updateOptions({ tabSize: 2 });
 
-    // const highlighter = new Highlighter(
-    //   // @ts-ignore
-    //   window.monaco,
-    //   codeShift,
-    //   monacoEditor
-    // );
+
+    // Minimal Babel setup for React JSX parsing:
+      const babelParse = (code: any) => parse(code, {
+        sourceType: "module",
+        plugins: ["jsx"]
+      });
+
+      // Instantiate the highlighter
+//       const monacoJSXHighlighter = new MonacoJSXHighlighter(
+//         MonacoEditor, babelParse, traverse, getMonacoEditor()
+//       );
+
+    const defaultOptions = {
+      parser: 'babel', // for reference only, only babel is supported right now
+      isHighlightGlyph: true, // if JSX elements should decorate the line number gutter
+      iShowHover: true, // if JSX types should  tooltip with their type info
+      isUseSeparateElementStyles: true, // if opening elements and closing elements have different styling
+      isThrowJSXParseErrors: false, // Only JSX Syntax Errors are not thrown by default when parsing, true will throw like any other parsign error
+      };
+
+    const monacoJSXHighlighter = new MonacoJSXHighlighter(
+      // @ts-ignore
+      window.monaco,
+      babelParse,
+      traverse,
+      monacoEditor,
+      defaultOptions
+    );
+
+      // Activate highlighting (debounceTime default: 100ms)
+      monacoJSXHighlighter.highLightOnDidChangeModelContent(100);
+      // Activate JSX commenting
+      monacoJSXHighlighter.addJSXCommentCommand();
+      // Done =)
+
     // highlighter.highLightOnDidChangeModelContent(
     //   () => {},
     //   () => {},
