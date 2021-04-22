@@ -1,3 +1,4 @@
+import './preview.css'
 import {useEffect, useRef} from 'react';
 import { iterate } from "localforage"
 
@@ -34,7 +35,16 @@ const Preview: React.FC<PreviewProps> = ({code}) => {
         iframe.current.contentWindow.postMessage(code, '*')
     }, [code])
 
-    return <iframe style={{backgroundColor: 'white'}} title="preview" ref={iframe} sandbox="allow-scripts" srcDoc={html}/>;
+       return (
+        <div className="preview-wrapper">
+        <iframe 
+          title="preview" 
+          ref={iframe} 
+          sandbox="allow-scripts" 
+          srcDoc={html}
+        />
+        </div>
+      );
 }
 
 export default Preview
