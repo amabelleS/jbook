@@ -12,6 +12,7 @@ interface CodeEditorProps {
   onChange(value: string): void;
 }
 
+
 const CodeEditor: React.FC<CodeEditorProps> = ({ onChange, initialValue }) => {
   const editorRef = useRef<any>();
 
