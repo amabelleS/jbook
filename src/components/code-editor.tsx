@@ -34,11 +34,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ onChange, initialValue }) => {
         plugins: ["jsx"]
       });
 
-      // Instantiate the highlighter
-//       const monacoJSXHighlighter = new MonacoJSXHighlighter(
-//         MonacoEditor, babelParse, traverse, getMonacoEditor()
-//       );
-
+      // Instantiate the highlighter    
     const defaultOptions = {
       parser: 'babel', // for reference only, only babel is supported right now
       isHighlightGlyph: true, // if JSX elements should decorate the line number gutter
