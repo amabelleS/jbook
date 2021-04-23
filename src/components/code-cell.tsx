@@ -34,7 +34,7 @@ const CodeCell = () => {
         setInput(value)
       }} />
      </Resizable>
-      <Preview code={code}/>
+      <Preview err={err} code={code}/>
     </div>
     </Resizable>
   );
