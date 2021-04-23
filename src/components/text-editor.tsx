@@ -1,23 +1,32 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import MDEditor from '@uiw/react-md-editor';
 
 const TextEditor: React.FC = () => {
+    const ref = useRef<HTMLDivElement | null>(null)
     const [editing, setEditing] = useState(false);
     const [value, setValue] = useState("**Hello world!!!**");
 
-    useEffect(() => {
-        const listner = () => {
-            setEditing(false)
-        }
-        document.addEventListener('click', listner, {capture: true})
+   useEffect(() => {
+    const listener = (event: MouseEvent) => {
+      if (
+        ref.current &&
+        event.target &&
+        ref.current.contains(event.target as Node)
+      ) {
+        return;
+      }
 
-        return () => {
-            document.removeEventListener('click', listner, {capture: true})
-        }
-    }, [])
+      setEditing(false);
+    };
+    document.addEventListener('click', listener, { capture: true });
+
+    return () => {
+      document.removeEventListener('click', listener, { capture: true });
+    };
+  }, []);
 
     if (editing) {
-        return <div>
+        return <div ref={ref}>
             <MDEditor value={value}/>
         </div>
     }
