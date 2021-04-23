@@ -38,7 +38,7 @@ const Resizable: React.FC<ResizableProps> = ({ direction, children }) => {
     return () => {
       window.removeEventListener('resize', listner)
     }
-  }, [])
+  }, [width])
 
   if (direction === 'horizontal') {
     resizableProps = {
