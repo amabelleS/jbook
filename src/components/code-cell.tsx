@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import CodeEditor from './code-editor'
 import Preview from './preview'
@@ -10,11 +10,14 @@ const CodeCell = () => {
   const [input, setInput] = useState('');
   const [code, setCode] = useState('');
 
-  const onClick = async () => {
-  const output = await bundle(input)
-  setCode(output)
- };
-    
+  useEffect(() => {
+    setTimeout( async() => {
+      const output = await bundle(input)
+      setCode(output)
+    }, 1000)
+  }, [input])
+
+     
   return (
       <Resizable direction='vertical'>
     <div style={{height: '100%', display: 'flex', flexDirection: 'row'}}>
