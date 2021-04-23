@@ -1,6 +1,5 @@
 import './preview.css'
 import {useEffect, useRef} from 'react';
-import { iterate } from "localforage"
 
 interface PreviewProps {
     code: string;
@@ -34,7 +33,9 @@ const Preview: React.FC<PreviewProps> = ({code}) => {
 
     useEffect(() => {
         iframe.current.srcdoc = html
-        iframe.current.contentWindow.postMessage(code, '*')
+        setTimeout(() => {
+          iframe.current.contentWindow.postMessage(code, '*')
+        }, 50)
     }, [code])
 
        return (
