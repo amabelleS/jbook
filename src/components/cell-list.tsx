@@ -1,9 +1,11 @@
-import { import } from "jscodeshift"
-
 import {useTypedSelector} from '../hooks/use-typed-selector'
 
 const CellList: React.FC = () => {
-    useTypedSelector((state) => state)
+    const cells = useTypedSelector(({cells: {order, data}}) => 
+        order.map((id) => 
+            data[id]
+        )
+    )
     return <div>Cell List</div>
 }
 
