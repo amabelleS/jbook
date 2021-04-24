@@ -1,5 +1,3 @@
-import { type } from "os";
-
 export type CellTypes = 'code' | 'text'
 
 export interface Cell {
