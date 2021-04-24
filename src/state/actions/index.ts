@@ -1,3 +1,5 @@
+import { BundelCompleteAction } from './index';
+import { type } from 'os';
 import { ActionType } from '../action-types';
 import {CellTypes} from '../cell'
 
@@ -32,8 +34,28 @@ export interface UpdateCellAction {
   };
 }
 
+export interface BundelStartAction {
+  type: ActionType.BUNDEL_START,
+  payload: {
+    cellId: string
+  }
+}
+
+export interface BundelCompleteAction {
+  type: ActionType.BUNDEL_COMPLETE,
+  payload: {
+    cellId: string,
+    bundel: {
+      code: string,
+      err: string
+    }
+  }
+}
+
 export type Action =
   | MoveCellAction
   | DeleteCellAction
   | InsertCellAfterAction
-  | UpdateCellAction;
+  | UpdateCellAction
+  | BundelStartAction
+  | BundelCompleteAction;
